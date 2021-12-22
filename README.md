@@ -1,2 +1,2 @@
 # Ichor
-Fast S-expression parser extension for Ruby
+**Fast S-expression parser extension for Ruby**
