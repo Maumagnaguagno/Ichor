@@ -1,9 +1,8 @@
 #include "ruby.h"
 
-static VALUE rb_scan_tokens(VALUE self, VALUE filename)
+static VALUE rb_str_to_sexpr(VALUE str)
 {
-  Check_Type(filename, T_STRING);
-  char *pos = RSTRING_PTR(filename);
+  char *pos = RSTRING_PTR(str);
   VALUE stack = rb_ary_new();
   VALUE list = rb_ary_new();
   while(*pos)
@@ -35,6 +34,5 @@ static VALUE rb_scan_tokens(VALUE self, VALUE filename)
 
 void Init_ichor(void)
 {
-  VALUE Scanner_id = rb_define_module("Ichor");
-  rb_define_singleton_method(Scanner_id, "scan_tokens", rb_scan_tokens, 1);
+  rb_define_method(rb_cString  , "to_sexpr", rb_str_to_sexpr, 0);
 }

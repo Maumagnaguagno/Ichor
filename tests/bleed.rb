@@ -3,41 +3,37 @@ require './ichor'
 
 class Bleed < Test::Unit::TestCase
 
-  def test_input_type
-    assert_raises(TypeError) {Ichor.scan_tokens(nil)}
-  end
-
   def test_malformed_expression_exception
-    e = assert_raises(RuntimeError) {Ichor.scan_tokens('')
-    assert_equal('Malformed expression', e.message)}
-    e = assert_raises(RuntimeError) {Ichor.scan_tokens(" \t\v\n\r")}
+    e = assert_raises(RuntimeError) {''.to_sexpr}
     assert_equal('Malformed expression', e.message)
-    e = assert_raises(RuntimeError) {Ichor.scan_tokens('a b')}
+    e = assert_raises(RuntimeError) {" \t\v\n\r".to_sexpr}
     assert_equal('Malformed expression', e.message)
-    e = assert_raises(RuntimeError) {Ichor.scan_tokens('() ()')}
+    e = assert_raises(RuntimeError) {'a b'.to_sexpr}
+    assert_equal('Malformed expression', e.message)
+    e = assert_raises(RuntimeError) {'() ()'.to_sexpr}
     assert_equal('Malformed expression', e.message)
   end
 
   def test_missing_parentheses_exception
-    e = assert_raises(RuntimeError) {Ichor.scan_tokens('(()')}
+    e = assert_raises(RuntimeError) {'(()'.to_sexpr}
     assert_equal('Missing close parentheses', e.message)
-    e= assert_raises(RuntimeError) {Ichor.scan_tokens('())')}
+    e= assert_raises(RuntimeError) {'())'.to_sexpr}
     assert_equal('Missing open parentheses', e.message)
   end
 
   def test_symbol
-    ['a', 'aether', ':a-b+c^0?'].each {|s| assert_equal(s, Ichor.scan_tokens(s))}
+    ['a', 'aether', ':a-b+c^0?'].each {|s| assert_equal(s, s.to_sexpr)}
   end
 
   def test_lists
-    assert_equal([], Ichor.scan_tokens('()'))
-    assert_equal([[]], Ichor.scan_tokens('(())'))
-    assert_equal(['a', ['b'], [['c']]], Ichor.scan_tokens('(a (b) (( c  ) ))'))
+    assert_equal([], '()'.to_sexpr)
+    assert_equal([[]], '(())'.to_sexpr)
+    assert_equal(['a', ['b'], [['c']]], '(a (b) (( c  ) ))'.to_sexpr)
   end
 
   def test_whitespaces
-    assert_equal([], Ichor.scan_tokens('  ()  '))
-    assert_equal([], Ichor.scan_tokens(' (    ) '))
-    assert_equal(['a', 'b'], Ichor.scan_tokens("\n(\ta\nb ) \n "))
+    assert_equal([], '  ()  '.to_sexpr)
+    assert_equal([], ' (    ) '.to_sexpr)
+    assert_equal(['a', 'b'], "\n(\ta\nb ) \n ".to_sexpr)
   end
 end
