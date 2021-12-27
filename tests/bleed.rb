@@ -36,4 +36,8 @@ class Bleed < Test::Unit::TestCase
     assert_equal([], ' (    ) '.to_sexpr)
     assert_equal(['a', 'b'], "\n(\ta\nb ) \n ".to_sexpr)
   end
+
+  def test_nul
+    assert_equal('a', "a \0 ignored".to_sexpr)
+  end
 end
