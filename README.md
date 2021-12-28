@@ -1,4 +1,4 @@
-# Ichor
+# Ichor [![Actions Status](https://github.com/Maumagnaguagno/Ichor/workflows/build/badge.svg)](https://github.com/Maumagnaguagno/Ichor/actions)
 **Fast S-expression parser extension for Ruby**
 
 The goal of this project is to have a fast ``to_sexpr`` method added to Ruby Strings to parse large [symbolic expression](https://en.wikipedia.org/wiki/S-expression) inputs.
