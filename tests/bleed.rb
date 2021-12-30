@@ -4,20 +4,16 @@ require './ichor'
 class Bleed < Test::Unit::TestCase
 
   def test_malformed_expression_exception
-    e = assert_raises(RuntimeError) {''.to_sexpr}
-    assert_equal('Malformed expression', e.message)
-    e = assert_raises(RuntimeError) {" \t\v\n\r".to_sexpr}
-    assert_equal('Malformed expression', e.message)
-    e = assert_raises(RuntimeError) {'a b'.to_sexpr}
-    assert_equal('Malformed expression', e.message)
-    e = assert_raises(RuntimeError) {'() ()'.to_sexpr}
-    assert_equal('Malformed expression', e.message)
+    ['', " \t\v\n\r", 'a b', '() ()'].each {|s|
+      e = assert_raises(RuntimeError) {s.to_sexpr}
+      assert_equal('Malformed expression', e.message)
+    }
   end
 
   def test_missing_parentheses_exception
     e = assert_raises(RuntimeError) {'(()'.to_sexpr}
     assert_equal('Missing close parentheses', e.message)
-    e= assert_raises(RuntimeError) {'())'.to_sexpr}
+    e = assert_raises(RuntimeError) {'())'.to_sexpr}
     assert_equal('Missing open parentheses', e.message)
   end
 
