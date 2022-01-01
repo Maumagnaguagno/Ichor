@@ -34,5 +34,5 @@ static VALUE rb_str_to_sexpr(VALUE str)
 
 void Init_ichor(void)
 {
-  rb_define_method(rb_cString  , "to_sexpr", rb_str_to_sexpr, 0);
+  rb_define_method(rb_cString, "to_sexpr", rb_str_to_sexpr, 0);
 }
