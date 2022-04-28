@@ -8,7 +8,6 @@ An exception is raised when missing an open/close parentheses or the expression 
 Parsing stops once a [NUL](https://en.wikipedia.org/wiki/Null_character) is reached.
 
 ## Build
-
 ```Shell
 cd Ichor
 ruby extconf.rb
@@ -16,8 +15,11 @@ make
 ```
 
 ## Usage
-
 ```Ruby
 require_relative 'ichor'
 p '(define example (begin () end))'.to_sexpr
+```
+
+```Shell
+ruby -r ./ichor.so -e "p '(+ 2 3)'.to_sexpr"
 ```
