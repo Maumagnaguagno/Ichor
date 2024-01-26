@@ -15,7 +15,7 @@ static VALUE rb_str_to_sexpr(VALUE str)
   VALUE list = rb_ary_new();
   while(*pos)
   {
-    while(isspace(*pos)) ++pos;
+    while(*pos && *pos <= ' ') ++pos;
     if(*pos == '(')
     {
       rb_ary_push(stack, list);
@@ -31,7 +31,7 @@ static VALUE rb_str_to_sexpr(VALUE str)
     else
     {
       char *begin = pos;
-      while(*pos && !isspace(*pos) && *pos != '(' && *pos != ')') ++pos;
+      while(*pos > ' ' && *pos != '(' && *pos != ')') ++pos;
       if(begin != pos) rb_ary_push(list, rb_str_new(begin, pos - begin));
     }
   }
