@@ -15,8 +15,8 @@ static VALUE rb_str_to_sexpr(VALUE str)
   VALUE list = rb_ary_new();
   while(*pos)
   {
-    while(*pos && *pos <= ' ') ++pos;
-    if(*pos == '(')
+    if(*pos <= ' ') ++pos;
+    else if(*pos == '(')
     {
       rb_ary_push(stack, list);
       list = rb_ary_new();
@@ -25,7 +25,7 @@ static VALUE rb_str_to_sexpr(VALUE str)
     else if(*pos == ')')
     {
       if(RARRAY_LEN(stack) == 0) rb_raise(rb_eRuntimeError, "Missing open parentheses");
-      else list = rb_ary_push(rb_ary_pop(stack), list);
+      list = rb_ary_push(rb_ary_pop(stack), list);
       ++pos;
     }
     else
