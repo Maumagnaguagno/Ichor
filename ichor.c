@@ -31,8 +31,8 @@ static VALUE rb_str_to_sexpr(VALUE str)
     else
     {
       char *begin = pos;
-      while(*pos > ' ' && *pos != '(' && *pos != ')') ++pos;
-      if(begin != pos) rb_ary_push(list, rb_str_new(begin, pos - begin));
+      while(*++pos > ' ' && *pos != '(' && *pos != ')');
+      rb_ary_push(list, rb_str_new(begin, pos - begin));
     }
   }
   if(RARRAY_LEN(stack) != 0) rb_raise(rb_eRuntimeError, "Missing close parentheses");
